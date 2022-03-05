@@ -8,6 +8,8 @@ char TecladoHex[16]= {'1','2','3',Start,
                       Izq,'0',Der,Abajo };
 void teclado_inicializa(){
     TRIS_teclado=0b11110000;
+    
+    
     INTCON2bits.RBPU=0;
     teclado_deje_de_pulsar();}
 

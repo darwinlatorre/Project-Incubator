@@ -16,6 +16,9 @@
 #define teclado_c2        PORTBbits.RB5
 #define teclado_c3        PORTBbits.RB6
 #define teclado_c4        PORTBbits.RB7
+
+#define teclado_
+
 void teclado_inicializa();
 char teclado_lee();
 void teclado_deje_de_pulsar();
