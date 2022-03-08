@@ -18,14 +18,14 @@ void PWM1_PWM2_Init(unsigned char periodo){
 
 }
 
-void PWM1_setDC(unsigned char dutycycle){
+void PWM1_setDC(unsigned char dutycycle){ // FOCO
     CCPR1L = dutycycle; // PWM duty cycle - 8-bits (MSb)
 }
-void PWM2_setDC(unsigned char dutycycle){
+void PWM2_setDC(unsigned char dutycycle){ //MOTOR
     CCPR2L = dutycycle; // PWM duty cycle - 8-bits (MSb)
 }
 
-void config_TMR0(){
+void config_TMR0(){ // MOTOR
     T0CONbits.T08BIT=0;        //configura a 16 bits 0-65535
     T0CONbits.T0CS=0;           //selecciona modo temporizador
     T0CONbits.T0PS=0b000;       //prescaler x2
@@ -36,7 +36,7 @@ void config_TMR0(){
     INTCONbits.TMR0IE=1;        //habilita interrupcion TMR0
     INTCON2bits.TMR0IP=0;       //interrupcion de baja prioridad
 }
-void config_TMR1(){
+void config_TMR1(){  //FOCO
     T1CONbits.RD16=1;     //16 bits
     T1CONbits.TMR1CS=0;       //modo temporizador
     T1CONbits.T1CKPS=0b11;   //prescaler 8
@@ -57,7 +57,7 @@ void inicializa_ADC(){
     ADCON0bits.GO_DONE=0;     //ADC en reposo
     ADCON0bits.ADON=1;
 }
-unsigned char adc_read(char chx){ ///se  envia el canal a leer y retorna un int=16bits
+unsigned char adc_read(char chx){ ///se  envia el canal a leer y retorna un int=16bits (LECTURA DE TEMPERATURA y HUMERDAD dependiendo el CHX(Puerto) se se ingrese)
     ADCON0= ((ADCON0&0b11000011) |chx<<2);
     ADCON0bits.GO=1;
     while(ADCON0bits.GO==1);
