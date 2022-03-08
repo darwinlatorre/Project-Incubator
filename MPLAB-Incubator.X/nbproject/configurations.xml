@@ -5,9 +5,12 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>BITS_Configuration.h</itemPath>
-      <itemPath>LCD_20x4Lib.h</itemPath>
       <itemPath>KeyBoardLib.h</itemPath>
       <itemPath>ADCLib.h</itemPath>
+      <itemPath>I2CLib.h</itemPath>
+      <itemPath>LCD20x4Lib.h</itemPath>
+      <itemPath>FunctionsHeader.h</itemPath>
+      <itemPath>RTCLib.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -17,9 +20,12 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>main.c</itemPath>
-      <itemPath>LCD_20x4Lib.c</itemPath>
       <itemPath>KeyBoardLib.c</itemPath>
       <itemPath>ADCLib.c</itemPath>
+      <itemPath>I2CLib.c</itemPath>
+      <itemPath>LCD20x4Lib.c</itemPath>
+      <itemPath>Functions.c</itemPath>
+      <itemPath>RTCLib.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -27,6 +33,9 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="2">

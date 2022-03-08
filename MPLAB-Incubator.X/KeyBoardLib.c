@@ -1,14 +1,11 @@
-#include <xc.h>
-#include "BITS_Configuration.h"
 #include "KeyBoardLib.h"
 
 char TecladoHex[16]= {'1','2','3',Start,
                       '4','5','6',Stop,
                       '7','8','9',Arriba,
                       Izq,'0',Der,Abajo };
-void teclado_inicializa(){
+void InitKeyBoard(){
     TRIS_teclado=0b11110000;
-    
     
     INTCON2bits.RBPU=0;
     teclado_deje_de_pulsar();}
@@ -20,7 +17,7 @@ void teclado_deje_de_pulsar(){
     }
     while(PORT_teclado!=0b11110000);}
 
-char teclado_lee(){
+char ReadKeyBoard(){
     unsigned char t_orden=0;
     LAT_teclado = 0b11111110;
     while(t_orden<15){

@@ -1,28 +1,28 @@
 #include "ADCLib.h"
-#include <xc.h>
 
 void PWM1_PWM2_Init(unsigned char periodo){  
-//TRISCbits.RC2 =0; // RC2 como salida
-/* CCP modo PWM */
-CCP1CONbits.DC1B = 0b00; // 5,4 bits limpios (DC1B1:DC1B0 = 00)
-CCP1CONbits.CCP1M = 0b1100 ; // modo PWM ( CCP1M3:CCP1M0 = 1100)
-/* Timer2 configuración */
-/////////////////////////////////////////////////////////////////
-TRISCbits.RC1 =0; // RC1 como salida
-/* CCP modo PWM */
-CCP2CONbits.DC2B = 0b00; // 5,4 bits limpios (DC1B1:DC1B0 = 00)
-CCP2CONbits.CCP2M = 0b1100 ; // modo PWM ( CCP2M3:CCP1M0 = 1100)
-TRISCbits.RC2 =0; // RC2 como salida
-PR2 = periodo; // configure PERIODO TMR2
-T2CONbits.T2CKPS = 0x02; // Prescaler x16
-T2CONbits.TMR2ON = 1; // timer2 ON
+    //TRISCbits.RC2 =0; // RC2 como salida
+    /* CCP modo PWM */
+    CCP1CONbits.DC1B = 0b00; // 5,4 bits limpios (DC1B1:DC1B0 = 00)
+    CCP1CONbits.CCP1M = 0b1100 ; // modo PWM ( CCP1M3:CCP1M0 = 1100)
+    /* Timer2 configuración */
+    /////////////////////////////////////////////////////////////////
+    TRISCbits.RC1 =0; // RC1 como salida
+    /* CCP modo PWM */
+    CCP2CONbits.DC2B = 0b00; // 5,4 bits limpios (DC1B1:DC1B0 = 00)
+    CCP2CONbits.CCP2M = 0b1100 ; // modo PWM ( CCP2M3:CCP1M0 = 1100)
+    TRISCbits.RC2 =0; // RC2 como salida
+    PR2 = periodo; // configure PERIODO TMR2
+    T2CONbits.T2CKPS = 0x02; // Prescaler x16
+    T2CONbits.TMR2ON = 1; // timer2 ON
+
 }
 
 void PWM1_setDC(unsigned char dutycycle){
-CCPR1L = dutycycle; // PWM duty cycle - 8-bits (MSb)
+    CCPR1L = dutycycle; // PWM duty cycle - 8-bits (MSb)
 }
 void PWM2_setDC(unsigned char dutycycle){
-CCPR2L = dutycycle; // PWM duty cycle - 8-bits (MSb)
+    CCPR2L = dutycycle; // PWM duty cycle - 8-bits (MSb)
 }
 
 void config_TMR0(){

@@ -1,7 +1,4 @@
-
-#include <xc.h>
-#include "BITS_Configuration.h"
-#include "LCD_20x4Lib.h"
+#include "LCD20x4Lib.h"
 
 void LCDStart(unsigned char prmLCDtype)
 {
@@ -21,8 +18,10 @@ void LCDStart(unsigned char prmLCDtype)
             TRIS_DATA_PORT |= 0x0f;
         #endif
     #endif
+        TRIS_RW = 0;                    // All control signals made outputs
         TRIS_RS = 0;
         TRIS_E = 0;
+        RW_PIN = 0;                     // R/W pin made low
         RS_PIN = 0;                     // Register select pin made low
         E_PIN = 0;                      // Clock pin made low
 
@@ -132,6 +131,7 @@ void SetDDRamAddr(unsigned char prmDDaddr)
             DATA_PORT &= 0xf0;                      // and write upper nibble
             DATA_PORT |= (((prmDDaddr | 0b10000000)>>4) & 0x0f);
         #endif
+            RW_PIN = 0;                             // Set control bits
             RS_PIN = 0;
             Delay1us();
             E_PIN = 1;                              // Clock the cmd and address in
@@ -160,6 +160,7 @@ void SetDDRamAddr(unsigned char prmDDaddr)
 
 unsigned char BusyLCD(void)
 {
+    RW_PIN = 1;                     // Set the control bits for read
     RS_PIN = 0;
     Delay1us();
     E_PIN = 1;                      // Clock in the command
@@ -187,6 +188,7 @@ unsigned char BusyLCD(void)
                 E_PIN = 1;              // Clock out other nibble
                 Delay1us();
                 E_PIN = 0;
+                RW_PIN = 0;             // Reset control line
                 return 1;               // Return TRUE
             }
             else                            // Busy bit is low
@@ -196,6 +198,7 @@ unsigned char BusyLCD(void)
                 E_PIN = 1;              // Clock out other nibble
                 Delay1us();
                 E_PIN = 0;
+                RW_PIN = 0;             // Reset control line
                 return 0;               // Return FALSE
             }
        
@@ -209,13 +212,16 @@ char ReadDataLCD(void)
         
     #ifdef BIT8                             // 8-bit interface
         RS_PIN = 1;                     // Set the control bits
-        Delay1us();
+        RW_PIN = 1;
+        Delay_1us();
         E_PIN = 1;                      // Clock the data out of the LCD
-        Delay1us();
+        Delay_1us();
         data = DATA_PORT;               // Read the data
         E_PIN = 0;
         RS_PIN = 0;                     // Reset the control bits
+        RW_PIN = 0;
     #else                                   // 4-bit interface
+        RW_PIN = 1;
         RS_PIN = 1;
         Delay1us();
         E_PIN = 1;                      // Clock the data out of the LCD
@@ -236,6 +242,7 @@ char ReadDataLCD(void)
         #endif
             E_PIN = 0;                                      
             RS_PIN = 0;                     // Reset the control bits
+            RW_PIN = 0;
     #endif  
     return(data);                   // Return the data byte
 }
@@ -245,13 +252,14 @@ void WriteCmdLCD(unsigned char prmCMD)
     while(BusyLCD());
     #ifdef BIT8                             // 8-bit interface
         TRIS_DATA_PORT = 0;             // Data port output
-        DATA_PORT = prmCMD;                // Write command to data port
+        DATA_PORT = cmd;                // Write command to data port
+        RW_PIN = 0;                     // Set the control signals
         RS_PIN = 0;                     // for sending a command
-        Delay1us();
+        Delay_1us();
         E_PIN = 1;                      // Clock the command in
-        Delay1us();
+        Delay_1us();
         E_PIN = 0;
-        Delay1us();
+        Delay_1us();
         TRIS_DATA_PORT = 0xff;          // Data port input
     #else                                   // 4-bit interface
         #ifdef UPPER                            // Upper nibble interface
@@ -263,6 +271,7 @@ void WriteCmdLCD(unsigned char prmCMD)
             DATA_PORT &= 0xf0;
             DATA_PORT |= (prmCMD>>4)&0x0f;
         #endif
+            RW_PIN = 0;                     // Set control signals for command
             RS_PIN = 0;
             Delay1us();
             E_PIN = 1;                      // Clock command in
@@ -296,11 +305,12 @@ void WriteDataLCD(char prmData)
         while(BusyLCD());
     #ifdef BIT8                             // 8-bit interface
         TRIS_DATA_PORT = 0;             // Make port output
-        DATA_PORT = prmData;               // Write data to port
+        DATA_PORT = data;               // Write data to port
         RS_PIN = 1;                     // Set control bits
-        Delay1us();
+        RW_PIN = 0;
+        Delay_1us();
         E_PIN = 1;                      // Clock data into LCD
-        Delay1us();
+        Delay_1us();
         E_PIN = 0;
         RS_PIN = 0;                     // Reset control bits
         TRIS_DATA_PORT = 0xff;          // Make port input
@@ -315,6 +325,7 @@ void WriteDataLCD(char prmData)
             DATA_PORT |= ((prmData>>4)&0x0f);
         #endif
             RS_PIN = 1;                     // Set control bits
+            RW_PIN = 0;
             Delay1us();
             E_PIN = 1;                      // Clock nibble into LCD
             Delay1us();

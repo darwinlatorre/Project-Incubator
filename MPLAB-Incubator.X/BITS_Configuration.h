@@ -1,6 +1,5 @@
-
-#ifndef fusibles_H
-#define	fusibles_H
+#ifndef BITS_CONFIGURATION
+#define	BITS_CONFIGURATION
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 
@@ -67,4 +66,4 @@
 #pragma config EBTRB = OFF      // Boot Block Table Read Protection bit (Boot block (000000-0007FFh) is not protected from table reads executed in other blocks)
 
 // CONFIG7H
-#endif	/* XC_HEADER_TEMPLATE_H */
+#endif	/* BITS_CONFIGURATION */

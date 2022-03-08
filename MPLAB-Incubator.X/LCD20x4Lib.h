@@ -1,16 +1,19 @@
 #ifndef __XLCD_H
 #define __XLCD_H
 
+#include "FunctionsHeader.h"
+
 /* DATA_PORT defines the port to which the LCD data lines are connected */
 #define DATA_PORT  PORTD
 #define TRIS_DATA_PORT  TRISD
-#define	_XTAL_FREQ 20000000
 
 /* CTRL_PORT defines the port where the control lines are connected.*/
-#define RS_PIN   LATDbits.LATD4   /* PORT for RS */
-#define TRIS_RS  TRISDbits.TRISD4    /* TRIS for RS */
-#define E_PIN    LATDbits.LATD5   /* PORT for E  */
-#define TRIS_E   TRISDbits.TRISD5    /* TRIS for E  */
+#define RW_PIN   LATDbits.LATD4   /* PORT for RW */
+#define TRIS_RW  TRISDbits.TRISD4    /* TRIS for RW */
+#define RS_PIN   LATDbits.LATD5   /* PORT for RS */
+#define TRIS_RS  TRISDbits.TRISD5    /* TRIS for RS */
+#define E_PIN    LATDbits.LATD6   /* PORT for E  */
+#define TRIS_E   TRISDbits.TRISD6    /* TRIS for E  */
 
 /* Display ON/OFF Control defines */
 #define DON         0b00001111  /* Display on      */
@@ -32,6 +35,7 @@
 
 // ----------------- Function Set defines------------------------- 
 #define FOUR_BIT   0b00101111  /* 4-bit Interface               */
+#define EIGHT_BIT  0b00111111  /* 8-bit Interface               */
 #define LINE_5X7   0b00110011  /* 5x7 characters, single line   */
 #define LINE_5X10  0b00110111  /* 5x10 characters               */
 #define LINES_5X7  0b00111011  /* 5x7 characters, multiple line */
@@ -41,6 +45,11 @@
 #define DDRAM_LINE3   0b10010100  /* 4-bit Interface               */
 #define DDRAM_LINE4   0b11010100  /* 4-bit Interface               */
 #define CGRAM_ADDRESS 0b01000000  /* 4-bit Interface               */
+
+byte atrPosicionX = 3;                          //Indicará la posicion del cursor que parpadea
+byte atrPosicionY = 1;                          //Indicará la posicion del cursor que parpadea
+byte atrSetPoint1 = 50, atrHisteresis1 = 5, atrSetPoint2 = 50, atrHisteresis2 = 5;   //variables(setpoint/histéresis/Variable de proceso)
+unsigned char string_cont1[40];
 
 // -----------OpenXLCD --> Configura pines de I/O para el LCD
 void LCDStart(unsigned char prmLCDtype);

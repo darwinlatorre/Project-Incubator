@@ -1,8 +1,8 @@
- 
-#ifndef teclado_H
-#define	teclado_H
-#define	_XTAL_FREQ 20000000
-#include <xc.h>
+#ifndef XC_KEYBOARD_H
+#define	XC_KEYBOARD_H
+
+#include "FunctionsHeader.h"
+
 #define Start   'A'
 #define Stop    'B'
 #define Arriba   'C'
@@ -17,12 +17,14 @@
 #define teclado_c3        PORTBbits.RB6
 #define teclado_c4        PORTBbits.RB7
 
-#define teclado_
+char atrCaracter;                      //Almacenará el caracter leido del teclado matricial
+byte atrStart, atrVarMax, atrVarMin, intV, intL, atrHisteresisMin, atrHisteresisMax;       //variables(Valor maximo/Valor minimo)=Setpoint +- Histéresis 
+// variable start indicara con un numero diferente a cero que inicia el programa
 
-void teclado_inicializa();
-char teclado_lee();
+void InitKeyBoard();
+char ReadKeyBoard();
 void teclado_deje_de_pulsar();
 char leclado_orden_tecla();
 
-#endif	/* XC_HEADER_TEMPLATE_H */
+#endif	/* XC_KEYBOARD_H */
 

@@ -1,8 +1,10 @@
-
 #ifndef librerias_H
 #define	librerias_H
-#define	_XTAL_FREQ 20000000
-#include <xc.h> // include processor files - each processor file is guarded.
+
+#include "FunctionsHeader.h"
+
+byte atrVarPorceso1, atrVarPorceso2;
+
 void ejecutaComandoPresionado(unsigned char comando);
 void PWM1_PWM2_Init(unsigned char periodo);
 void PWM1_setDC(unsigned char dutycycle);
